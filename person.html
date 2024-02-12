@@ -1,0 +1,92 @@
+
+
+
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <div class="ban">
+            <br>
+            <div class="navbar">
+                <h1 class="logo">M<span>ental</span>E<span>ase</span></h1>
+                <ul>
+                    <li><a href="home.html"> Home </a></li>
+                     
+                    <li><a href="person.html" class="bg-person"> person </a></li>
+                    
+                </ul>
+                
+            </div>
+            
+           
+           
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Breathing Timer</title>
+                <link rel="stylesheet" href="styles.css">
+            </head>
+            <body>
+                <div class="circle">
+                    <button class="nextbutton" onclick="redirectToPage()"> >> </button>
+
+<script>
+function redirectToPage() {
+  window.location.href = "bubble.html";
+}
+</script>
+
+
+    
+                    <div id="timer">00:00</div>
+                    <div id="instructions">Inhale</div>
+                </div>
+                <input class="in" type="number" id="duration" placeholder="Enter duration in minutes">
+                <button class="breathe" onclick="startBreathing()">Start Breathing</button>
+            
+                <script>
+                    
+function startBreathing() {
+    var instructions = ["Inhale", "Exhale"];
+    var instructionIndex = 0;
+
+    var timerDisplay = document.getElementById("timer");
+    var instructionDisplay = document.getElementById("instructions");
+
+    var durationInput = document.getElementById("duration");
+    var duration = parseInt(durationInput.value) * 60;
+    if (isNaN(duration) || duration <= 0) {
+        alert("Please enter a valid duration.");
+        return;
+    }
+
+    var interval = setInterval(function() {
+        duration--;
+        if (duration < 0) {
+            clearInterval(interval);
+            timerDisplay.textContent = "00:00";
+            instructionDisplay.textContent = "Time's up!";
+            return;
+        }
+
+        var minutes = Math.floor(duration / 60);
+        var seconds = duration % 60;
+        timerDisplay.textContent = (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+
+        instructionDisplay.textContent = instructions[instructionIndex];
+        instructionIndex = (instructionIndex + 1) % 2;
+    }, 1000);
+}
+
+
+
+
+
+                </script>
+               
+            </body>
+            </html
+              

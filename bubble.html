@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+   
+   
+    <div class="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Popper Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="gameCanvas" width="1200" height="600"></canvas>
+    <button class="playp" id="playAgainButton">Play Again</button>
+    
+    <button class="backp" onclick="window.location.href='person.html'">Back</button>
+
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const bubbles = [];
+        const bubbleRadius = 20;
+        const popSound = new Audio('shooting-sound-fx-159024.mp3');
+
+        function generateBubble() {
+            const bubble = {
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                color: '#' + Math.floor(Math.random() * 16777215).toString(16),
+                radius: bubbleRadius
+            };
+            bubbles.push(bubble);
+        }
+
+        function drawBubbles() {
+            bubbles.forEach(bubble => {
+                ctx.beginPath();
+                ctx.arc(bubble.x, bubble.y, bubble.radius, 0, Math.PI * 2);
+                ctx.fillStyle = bubble.color;
+                ctx.fill();
+                ctx.closePath();
+            });
+        }
+
+        canvas.addEventListener('click', event => {
+            const mouseX = event.clientX - canvas.offsetLeft;
+            const mouseY = event.clientY - canvas.offsetTop;
+
+            bubbles.forEach((bubble, index) => {
+                const dist = Math.sqrt((mouseX - bubble.x) ** 2 + (mouseY - bubble.y) ** 2);
+                if (dist < bubble.radius) {
+                    bubbles.splice(index, 1);
+                    popSound.currentTime = 0;
+                    popSound.play();
+                }
+            });
+        });
+
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBubbles();
+            requestAnimationFrame(gameLoop);
+        }
+
+        for (let i = 0; i < 20; i++) {
+            generateBubble();
+        }
+
+        gameLoop();
+
+        // Function to reset the game
+        function resetGame() {
+            location.reload();
+        }
+
+        // Event listener for the "Play Again" button
+        const playAgainButton = document.getElementById('playAgainButton');
+        playAgainButton.addEventListener('click', resetGame);
+    </script>
+    </div>
+</body>
+</html>
